@@ -423,4 +423,146 @@
   };
 
   initAppointmentForm();
+
+  // 10. Luxury Hero Showcase Slider Controller
+  const initHeroSlider = () => {
+    const sliderWrap = document.getElementById('hero-slider-wrap');
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    const prevBtn = document.getElementById('slider-prev-btn');
+    const nextBtn = document.getElementById('slider-next-btn');
+    const numDisplay = document.getElementById('slider-current-num');
+    const progressBar = document.getElementById('slider-progress-fill');
+
+    const tagService = document.getElementById('slider-tag-service');
+    const tagVehicle = document.getElementById('slider-tag-vehicle');
+    const badgeIcon = document.getElementById('badge-icon');
+    const badgeTitle = document.getElementById('badge-title');
+    const badgeSub = document.getElementById('badge-sub');
+
+    if (!sliderWrap || !slides.length) return;
+
+    let currentIndex = 0;
+    const total = slides.length;
+    const intervalDuration = 5500;
+    let progressStartTime = Date.now();
+    let elapsedBeforePause = 0;
+    let isPaused = false;
+
+    const updateSlideContent = (index) => {
+      const activeSlide = slides[index];
+      if (!activeSlide) return;
+
+      const tag = activeSlide.getAttribute('data-tag') || 'DETAILING';
+      const vehicle = activeSlide.getAttribute('data-vehicle') || 'STUDIO BUILD';
+      const icon = activeSlide.getAttribute('data-badge-icon') || '✳';
+      const title = activeSlide.getAttribute('data-badge-title') || 'THE DOLO FINISH';
+      const sub = activeSlide.getAttribute('data-badge-sub') || 'Every detail matters.';
+
+      if (tagService) tagService.textContent = tag;
+      if (tagVehicle) tagVehicle.textContent = vehicle;
+      if (badgeIcon) badgeIcon.textContent = icon;
+      if (badgeTitle) badgeTitle.textContent = title;
+      if (badgeSub) badgeSub.textContent = sub;
+      if (numDisplay) numDisplay.textContent = String(index + 1).padStart(2, '0');
+    };
+
+    const goToSlide = (index) => {
+      if (index === currentIndex && slides[index].classList.contains('is-active')) {
+        return;
+      }
+
+      slides.forEach((s, i) => {
+        s.classList.toggle('is-active', i === index);
+      });
+
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-active', i === index);
+      });
+
+      currentIndex = index;
+      updateSlideContent(index);
+
+      progressStartTime = Date.now();
+      elapsedBeforePause = 0;
+      if (progressBar) progressBar.style.width = '0%';
+    };
+
+    const nextSlide = () => {
+      goToSlide((currentIndex + 1) % total);
+    };
+
+    const prevSlide = () => {
+      goToSlide((currentIndex - 1 + total) % total);
+    };
+
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const targetIndex = parseInt(dot.getAttribute('data-slide'), 10);
+        if (!isNaN(targetIndex)) goToSlide(targetIndex);
+      });
+    });
+
+    const progressLoop = () => {
+      if (!isPaused && !prefersReducedMotion) {
+        const now = Date.now();
+        const totalElapsed = elapsedBeforePause + (now - progressStartTime);
+        const progressPct = Math.min(100, (totalElapsed / intervalDuration) * 100);
+
+        if (progressBar) {
+          progressBar.style.width = `${progressPct}%`;
+        }
+
+        if (totalElapsed >= intervalDuration) {
+          nextSlide();
+        }
+      }
+      requestAnimationFrame(progressLoop);
+    };
+
+    sliderWrap.addEventListener('mouseenter', () => {
+      isPaused = true;
+      elapsedBeforePause += (Date.now() - progressStartTime);
+    });
+
+    sliderWrap.addEventListener('mouseleave', () => {
+      isPaused = false;
+      progressStartTime = Date.now();
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    sliderWrap.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      isPaused = true;
+      elapsedBeforePause += (Date.now() - progressStartTime);
+    }, { passive: true });
+
+    sliderWrap.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      isPaused = false;
+      progressStartTime = Date.now();
+
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 45) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    sliderWrap.setAttribute('tabindex', '0');
+    sliderWrap.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      else if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    updateSlideContent(0);
+    requestAnimationFrame(progressLoop);
+  };
+
+  initHeroSlider();
 })();

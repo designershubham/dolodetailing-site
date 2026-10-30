@@ -83,16 +83,73 @@
         <div class="hero-proof"><span class="proof-stars" aria-label="Five star experience">★★★★★</span><span>Care for every curve. Finish for every detail.</span></div>
       </div>
       <!-- EL:COLUMN -->
-      <div class="hero-visual reveal reveal--delay">
-        <!-- Photo placeholder: Unsplash, photo by Nick Karvounis (car image); replace with Dolo brand photography. -->
-        <img class="hero-car-image" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=88" alt="Premium sports car in a dramatic studio setting">
-        <div class="hero-image-shade" aria-hidden="true"></div>
-        <div class="hero-side-label">DETAIL / PROTECT / RESTORE</div>
-        <div class="hero-float-card" data-tilt data-tilt-max="10">
-          <span class="float-card-icon" aria-hidden="true">✳</span>
-          <span><strong>THE DOLO FINISH</strong><small>Every detail matters.</small></span>
+      <!-- EL:COLUMN — Hero Showcase Slider -->
+      <div class="hero-visual reveal reveal--delay" id="hero-slider-wrap" aria-roledescription="carousel" aria-label="Showcase vehicles">
+        <div class="hero-slider" id="hero-slider">
+          <!-- Slide 01: Paint Correction -->
+          <div class="hero-slide is-active" data-index="0" data-badge-icon="✳" data-badge-title="THE DOLO FINISH" data-badge-sub="99.4% Swirl Defect Elimination" data-tag="PAINT CORRECTION" data-vehicle="PORSCHE 911 GT3">
+            <img class="hero-car-image" src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1800&q=88" alt="Porsche 911 GT3 receiving multi-stage paint correction">
+          </div>
+          <!-- Slide 02: Ceramic Coating -->
+          <div class="hero-slide" data-index="1" data-badge-icon="◈" data-badge-title="CERAMIC 10H" data-badge-sub="Permanent Hydrophobic Shield" data-tag="NANO-CERAMIC COATING" data-vehicle="MCLAREN 720S">
+            <img class="hero-car-image" src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1800&q=88" alt="McLaren 720S with high gloss ceramic coating reflection">
+          </div>
+          <!-- Slide 03: PPF Film Shield -->
+          <div class="hero-slide" data-index="2" data-badge-icon="⌁" data-badge-title="SELF-HEALING PPF" data-badge-sub="Invisible Edge-Wrapped Shield" data-tag="PAINT PROTECTION FILM" data-vehicle="FERRARI F8 TRIBUTO">
+            <img class="hero-car-image" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=88" alt="Supercar protected by self-healing paint protection film">
+          </div>
+          <!-- Slide 04: Interior Restoration -->
+          <div class="hero-slide" data-index="3" data-badge-icon="◎" data-badge-title="INTERIOR SPA" data-badge-sub="Steam Extraction & Leather UV Care" data-tag="BESPOKE INTERIOR" data-vehicle="ASTON MARTIN DBS">
+            <img class="hero-car-image" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=88" alt="Luxury sports coupe ready on studio display">
+          </div>
         </div>
-        <span class="hero-index">01 <i></i> 04</span>
+
+        <!-- Overlays & Shades -->
+        <div class="hero-image-shade" aria-hidden="true"></div>
+
+        <!-- Dynamic Slide Information Tag (Top Left of visual) -->
+        <div class="hero-slide-tag" id="slider-tag-pill">
+          <span class="tag-dot"></span>
+          <span class="tag-service" id="slider-tag-service">PAINT CORRECTION</span>
+          <span class="tag-sep">/</span>
+          <span class="tag-vehicle" id="slider-tag-vehicle">PORSCHE 911 GT3</span>
+        </div>
+
+        <!-- Side Label -->
+        <div class="hero-side-label">DETAIL / PROTECT / RESTORE</div>
+
+        <!-- Floating 3D Badge (Content updates with slide!) -->
+        <div class="hero-float-card" data-tilt data-tilt-max="10" id="hero-badge">
+          <span class="float-card-icon" id="badge-icon" aria-hidden="true">✳</span>
+          <span>
+            <strong id="badge-title">THE DOLO FINISH</strong>
+            <small id="badge-sub">99.4% Swirl Defect Elimination</small>
+          </span>
+        </div>
+
+        <!-- Slider Controls Bar (Bottom) -->
+        <div class="hero-slider-controls">
+          <!-- Slide Index & Progress Line -->
+          <div class="hero-index-wrap">
+            <span class="hero-index"><strong class="current-slide" id="slider-current-num">01</strong> <i><b class="progress-bar-fill" id="slider-progress-fill"></b></i> 04</span>
+          </div>
+
+          <!-- Arrows & Dots -->
+          <div class="hero-slider-nav">
+            <button type="button" class="slider-arrow slider-arrow--prev" id="slider-prev-btn" aria-label="Previous slide">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="slider-dots" id="slider-dots" role="tablist" aria-label="Slider pagination">
+              <button type="button" class="slider-dot is-active" data-slide="0" aria-label="Go to slide 1"></button>
+              <button type="button" class="slider-dot" data-slide="1" aria-label="Go to slide 2"></button>
+              <button type="button" class="slider-dot" data-slide="2" aria-label="Go to slide 3"></button>
+              <button type="button" class="slider-dot" data-slide="3" aria-label="Go to slide 4"></button>
+            </div>
+            <button type="button" class="slider-arrow slider-arrow--next" id="slider-next-btn" aria-label="Next slide">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="hero-scroll-cue"><span></span> SCROLL TO DISCOVER</div>
     </section>
